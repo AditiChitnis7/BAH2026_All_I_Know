@@ -13,11 +13,16 @@ cv.imshow('blank', blank)
 #cv.imshow('Partly coloured', blank)
 #cv.waitKey(0)
 
-#3. Drawing a rectangle
-cv.rectangle(blank, (0,0), (250,500), (0,255,0), thickness=2) #Creating the outline of a RECTANGLE
-cv.imshow('Rectangle', blank)
-cv.waitKey(0)
-
-cv.rectangle(blank, (0,0), (250,500), (0,255,0), thickness=cv.FILLED) #Creating a filled, green RECTANGLE (alternatively, thickness = -1 works too)
+##3. Drawing a rectangle
+#cv.rectangle(blank, (0,0), (250,500), (0,255,0), thickness=2) #Creating the outline of a RECTANGLE
+#cv.imshow('Rectangle', blank)
+#cv.waitKey(0)
+#
+#cv.rectangle(blank, (0,0), (250,500), (0,255,0), thickness=cv.FILLED) #Creating a filled, green RECTANGLE (alternatively, thickness = -1 works too)
+#cv.imshow('Rectangle', blank)
+#cv.waitKey(0)
+#
+#4. Using Image (blank) dimesions as input range
+cv.rectangle(blank, (0,0), (blank.shape[1]//2, blank.shape[0]//2), (0,255,0), thickness=-1) #Creating a filled, green RECTANGLE (alternatively, thickness = -1 works too)
 cv.imshow('Rectangle', blank)
 cv.waitKey(0)
