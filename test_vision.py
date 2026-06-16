@@ -3,6 +3,7 @@ import torch                                   #built on top of it, and MTCNN is
 from facenet_pytorch import MTCNN              #MTCNN Stands for Multi-task Cascaded Convolutional Networks.
                                                #It is a specific AI model included within the facenet-pytorch library. Its sole job is Face Detection and Alignment.
 
+
 #Telling the AI to use NVIDIA GPU
 #To shift heavy math from CPU to RTX GPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -42,3 +43,4 @@ while True:
         
 cap.release()
 cv2.destroyAllWindows()
+#end of program
