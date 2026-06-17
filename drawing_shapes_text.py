@@ -23,6 +23,11 @@ cv.imshow('blank', blank)
 #cv.waitKey(0)
 #
 #4. Using Image (blank) dimesions as input range
-cv.rectangle(blank, (0,0), (blank.shape[1]//2, blank.shape[0]//2), (0,255,0), thickness=-1) #Creating a filled, green RECTANGLE (alternatively, thickness = -1 works too)
-cv.imshow('Rectangle', blank)
+#cv.rectangle(blank, (0,0), (blank.shape[1]//2, blank.shape[0]//2), (0,255,0), thickness=-1) #Creating a filled, green RECTANGLE (alternatively, thickness = -1 works too)
+#cv.imshow('Rectangle', blank)
+#cv.waitKey(0)
+
+#5. Drawing a circle
+cv.circle(blank, (blank.shape[0]//2, blank.shape[1]//2), 40, (255,0,0), thickness=2) #Creating a hollow CIRCLE
+cv.imshow('Circle', blank)
 cv.waitKey(0)
