@@ -4,6 +4,6 @@ img= cv.imread(r"C:\Users\chitn\Downloads\grp dp.jpeg")
 cv.imshow('Original', img)
 
 #converting to greyscale
-gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+gray = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 cv.imshow('greyscaled', gray)
 cv.waitKey(0)
