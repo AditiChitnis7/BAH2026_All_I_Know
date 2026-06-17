@@ -28,6 +28,11 @@ cv.imshow('blank', blank)
 #cv.waitKey(0)
 
 #5. Drawing a circle
-cv.circle(blank, (blank.shape[0]//2, blank.shape[1]//2), 40, (255,0,0), thickness=2) #Creating a hollow CIRCLE
-cv.imshow('Circle', blank)
+#cv.circle(blank, (blank.shape[0]//2, blank.shape[1]//2), 40, (255,0,0), thickness=2) #Creating a hollow CIRCLE
+#cv.imshow('Circle', blank)
+#cv.waitKey(0)
+
+#6. Drawing a line
+cv.line(blank, (0,0), (blank.shape[0]//2,blank.shape[1]//2), (255,255,255), thickness=3) #Creating a line
+cv.imshow('Line', blank)
 cv.waitKey(0)
