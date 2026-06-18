@@ -27,7 +27,7 @@ while True:
     isTrue, frames = capture.read()
     
     cv.imshow('Video', frames)
-    flipped_vertical = cv.flip(frames, 0)
+    flipped_vertical = cv.flip(frames, -1)
     cv.imshow('flipped', flipped_vertical)
     if cv.waitKey(20) & 0xFF == ord('d'):
         break
