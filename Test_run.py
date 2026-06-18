@@ -1,3 +1,6 @@
+###NOTICEEEEEE##
+#Please run this EVERYTIME YOU START AFRESH: c:\Users\chitn\OPENCV\miniconda3new\Scripts\activate && conda activate compvis_env
+
 import cv2 as cv
 import numpy as np
 
