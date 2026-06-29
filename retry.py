@@ -13,46 +13,36 @@ img = cv.imread(r"C:\Users\chitn\Downloads\HACKATHONDATA\OHRCDATA\browse\calibra
 src = cv.normalize(img, None, 0, 255, cv.NORM_MINMAX, dtype=cv.CV_8U)
 greyscale = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
 
-# h: filter strength, higher removes more noise but can blur fine detail
 denoised = cv.fastNlMeansDenoising(greyscale, None, h=15, templateWindowSize=7, searchWindowSize=21)
 
-canny = cv.Canny(denoised, 60, 120)
+clahe = cv.createCLAHE(clipLimit=2.0, tileGridSize=(20,20))
+enhanced = clahe.apply(denoised)
 
-kernel = np.ones((5, 5), np.uint8)
-closed = cv.morphologyEx(canny, cv.MORPH_CLOSE, kernel)
+dark_mask = cv.inRange(enhanced, 0, 20)
+light_mask = cv.inRange(enhanced, 200, 255)
+combined_mask = cv.bitwise_or(dark_mask, light_mask)
 
-# Find all contours, then keep only the large ones (real craters, not rocks/grain)
-contours, hierarchy = cv.findContours(closed, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+# Output canvas: greyscale background, coloured crater outlines drawn on top
+output = cv.cvtColor(denoised, cv.COLOR_GRAY2BGR)
 
-# Draw filtered contours on a colour copy so they're visible
-output = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
-output = cv.cvtColor(output, cv.COLOR_GRAY2BGR)
+contours, hierarchy = cv.findContours(combined_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
 kept = 0
 for cnt in contours:
     area = cv.contourArea(cnt)
     perimeter = cv.arcLength(cnt, True)
-    if perimeter > 50:
+    if perimeter > 100 and area > 100:
         circularity = (4 * np.pi * area) / (perimeter ** 2)
-        if circularity > 0.2:
-            cv.drawContours(output, [cnt], -1, (0, 255, 0), 2)
+        if circularity > 0.4:
+            cv.drawContours(output, [cnt], -1, (0, 0, 255), thickness=cv.FILLED)
             kept += 1
-
-colour_mask = np.zeros((denoised.shape[0], denoised.shape[1], 3), dtype=np.uint8)
-dark_mask= cv.inRange(denoised, 0,40)
-colour_mask[dark_mask > 0] = (255, 0, 0)
-light_mask = cv.inRange(denoised, 120,255)
-colour_mask[light_mask > 0] = (0,255,0)
-#combined= cv.bitwise_or(dark_mask, light_mask)
 
 print(f"Total raw contours: {len(contours)}")
 print(f"Contours kept after circularity filter: {kept}")
+cv.imshow("original", rescale(src))
 cv.imshow("dark mask", rescale(dark_mask))
 cv.imshow("light mask", rescale(light_mask))
-cv.imshow("light + shadow mask", rescale(colour_mask))
-#cv.imshow("original", rescale(src))
-#cv.imshow("denoised", rescale(denoised))
-cv.imshow("canny edges", rescale(closed))
-cv.imshow("filtered craters", rescale(output))
+cv.imshow("combined masking", rescale(combined_mask))
+cv.imshow("detected craters", rescale(output))
 cv.waitKey(0)
 cv.destroyAllWindows()
